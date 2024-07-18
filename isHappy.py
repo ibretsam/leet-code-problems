@@ -33,7 +33,7 @@ def isHappy(n):
 	# curr_total = 0
 	# while True:
 	# 	for c in num:
-	# 		total[num] += int(c) ** 2        
+	# 		total[num] += int(c) ** 2
 	# 	curr_total = total[num]
 	# 	if curr_total == 1:
 	# 		return True
@@ -41,8 +41,8 @@ def isHappy(n):
 	# 	if num in total:
 	# 		return False
 	# 	total[num] = 0
-    
-	# Solution 2: Using Set    
+
+	# Solution 2: Using Set
 	def get_next(number):
 		total_sum = 0
 		while number > 0:
