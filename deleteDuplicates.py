@@ -48,11 +48,14 @@ def deleteDuplicates(head):
 
 
 # Test cases
+# 1 -> 2 -> 3 -> 3 -> 4 -> 4 -> 5]
 head = ListNode(1, ListNode(2, ListNode(3, ListNode(3, ListNode(4, ListNode(4, ListNode(5)))))))
 print(deleteDuplicates(head)) # [1,2,5]
 
+# 1 -> 1 -> 1 -> 2 -> 3
 head = ListNode(1, ListNode(1, ListNode(1, ListNode(2, ListNode(3)))))
 print(deleteDuplicates(head)) # [2,3]
 
+# 1 -> 1
 head = ListNode(1, ListNode(1))
 print(deleteDuplicates(head)) # []
