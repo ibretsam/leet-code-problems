@@ -31,47 +31,42 @@ n == grid[i].length
 grid[i][j] is '0' or '1'.
 """
 def numIslands(grid):
-    m = len(grid)
-    n = len(grid[0])
+    if not grid:
+        return 0
 
-    visited = set()
+    m, n = len(grid), len(grid[0])
     num_islands = 0
+    directions = [(1, 0), (-1, 0), (0, 1), (0, -1)]
 
-    def dfs(r, c):
-        stack = []
-        visited.add((r, c))
-        stack.append((r, c))
-        while stack:
-            row, col = stack.pop()
-            directions = [[1, 0], [-1, 0], [0, 1], [0, -1]]
-            for dx, dy in directions:
-                x, y = row + dx, col + dy
-                if (x in range(m) and y in range(n)):
-                    if (grid[x][y] == "1") and (x, y) not in visited:
-                        stack.append((x, y))
-                        visited.add((x, y))
+    def dfs(i, j):
+        if i < 0 or i >= m or j < 0 or j >= n or grid[i][j] == '0':
+            return
+        grid[i][j] = '0'  # Mark as visited by changing to '0'
+        for di, dj in directions:
+            dfs(i + di, j + dj)
 
     for i in range(m):
         for j in range(n):
-            if grid[i][j] == "1" and (i, j) not in visited:
-                dfs(i, j)
+            if grid[i][j] == '1':
                 num_islands += 1
+                dfs(i, j)
 
     return num_islands
 
 
-grid = [
+# Test cases
+grid1 = [
   ["1","1","1","1","0"],
   ["1","1","0","1","0"],
   ["1","1","0","0","0"],
   ["0","0","0","0","0"]
 ]
-print(numIslands(grid))
+print(numIslands(grid1))  # Expected output: 1
 
-grid = [
+grid2 = [
   ["1","1","0","0","0"],
   ["1","1","0","0","0"],
   ["0","0","1","0","0"],
   ["0","0","0","1","1"]
 ]
-print(numIslands(grid))
+print(numIslands(grid2))  # Expected output: 3
