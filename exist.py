@@ -31,35 +31,31 @@ Follow up: Could you use search pruning to make your solution faster with a larg
 """
 
 def exist(board, word):
-        m, n = len(board), len(board[0])
-        visited = set()
+    m, n = len(board), len(board[0])
 
-        def backtrack(curr_res, i, j):
-            if len(curr_res) == len(word):
-                if ''.join(curr_res) == word:
-                    return True
-                return False
-            direction = [(0, 1), (0, -1), (1, 0), (-1, 0)]
-            for dx, dy in direction:
-                x, y = dx + i, dy + j
-                if x in range(m) and y in range(n) and (x, y) not in visited and board[x][y] == word[len(curr_res)]:
-                    curr_res.append(board[x][y])
-                    visited.add((x, y))
-                    if backtrack(curr_res, x, y):
-                        return True
-                    curr_res.pop()
-                    visited.remove((x, y))
-                
+    def dfs(r, c, i):
+        if i == len(word):
+            return True
+        if r < 0 or c < 0 or r >= m or c >= n or board[r][c] != word[i]:
             return False
+        
+        temp = board[r][c]
+        board[r][c] = "#"
+        
+        directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]
+        for dx, dy in directions:                
+            if dfs(r + dx, c + dy, i + 1):
+                return True
 
-        for i in range(m):
-            for j in range(n):
-                if board[i][j] == word[0]:
-                    visited.add((i, j))
-                    if backtrack([board[i][j]], i, j):
-                        return True
-                    visited.remove((i, j))
+        board[r][c] = temp                
         return False
+
+    for r in range(m):
+        for c in range(n):
+            if board[r][c] == word[0]:
+                if dfs(r, c, 0):
+                    return True
+    return False
                 
 # Test cases
 print(exist([["A","B","C","E"],["S","F","C","S"],["A","D","E","E"]], "ABCCED")) # True
