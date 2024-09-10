@@ -43,21 +43,21 @@ def findOrder(numCourses, prerequisites):
 
     def dfs(course):
         if course in visiting:
-            return True
-        if course in visited:
             return False
+        if course in visited:
+            return True
         
         visiting.add(course)
         for preq in pre_map[course]:
-            if dfs(preq):
-                return True
+            if not dfs(preq):
+                return False
         visiting.remove(course)
         visited.add(course)
         res.append(course)
-        return False
+        return True
     
     for course in range(numCourses):
-        if dfs(course):
+        if not dfs(course):
             return []
 
     return res
